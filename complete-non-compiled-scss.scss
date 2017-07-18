@@ -1,0 +1,529 @@
+//I would first include normalize.scss, and it is on the web version
+//I just wanted to avoid clutter that wasn't my code in this document
+//I would also usually use a single index.scss with @imports from
+//smaller scss files for easier code managment
+
+//Mixins
+
+@mixin atSmall{
+	@media (min-width: 530px) {
+		@content;
+	}
+}
+
+@mixin atMedium {
+	@media (min-width: 800px) {
+		@content;
+	}
+}
+
+@mixin atLarge {
+	@media (min-width: 1010px) {
+		@content;
+	}
+}
+
+//For clearing floats
+@mixin clearFix {
+	&::after {
+		content: "";
+		clear: both;
+		display: table;
+	}
+}
+
+//Variables
+
+$mainBG: #f1f1f1;
+$contentBG: #ffffff;
+$content: #999999;
+$mainHeader: #333333;
+$altHeader: #0e1c2c;
+$thirdHeader: #ffffff;
+$mainGold: #ad9956;
+
+//Globals
+
+body {
+  font-family: 'Lato', sans-serif; /*main content */
+  color: $content;
+  background-color: $mainBG;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif; /*2nd headers italic */
+  font-weight: 400;
+  font-size: 2.2rem;
+  color: $mainHeader;
+}
+
+h2 {
+  font-family: 'Libre Baskerville', serif; /*top*/
+  font-weight: 400;
+  font-size: 3.8rem;
+  font-style: italic;
+  color: $altHeader;
+}
+
+//Globally applying border-box for easier styling on grids
+* {
+  box-sizing: border-box;
+}
+
+// Dummy class for screen size test
+// Include on page in blank div to activate
+
+.sizeTest {
+  float:left;
+
+  @include atLarge{
+  	& {
+  		float:none;
+  	}
+  }
+}
+
+//wrapper
+
+.wrapper {
+	overflow: hidden;
+	padding-left: 46px;
+	padding-right: 46px;
+	max-width: 1218px;
+	margin-left: auto;
+	margin-right: auto;
+
+	&--show-overflow {
+		overflow: visible;
+	}
+}
+
+//row-grid
+
+.row {
+	@include clearFix;
+
+	@include atLarge {
+		margin: 0 -15px;
+
+		// 4wide Grid
+		&__medium-3 {
+			float: left;
+			width: 25%;
+			padding-right: 15px;
+			padding-left: 15px;
+		}
+	}
+}
+
+//buttons
+
+.btn {
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+	font-size: 1rem;
+	display: block;
+	padding: 12px 40px;
+	margin: 0 auto 70px auto;
+	background-color: white;
+	color: $mainGold;
+	border: 2px solid $mainGold;
+	text-transform: uppercase;
+
+	&--gold {
+		background-color: $mainGold;
+		color: white;
+		font-weight: 700;
+	}
+
+	&--hide {
+		display:none;
+	}
+
+	&--larger {
+		padding: 34px 70px;
+		font-size: 2.4rem;
+
+		@include atLarge {
+			& {
+				padding: 12px 40px;
+				font-size: 1rem;
+			}
+		}
+	}
+
+	@include atLarge {
+		& {
+			display: block;
+		}
+	}
+}
+
+//main-header
+
+.page-header{
+    overflow: hidden;
+    text-align: center;
+    margin: 30px 0;
+    
+    h1 {
+        font-size: 5.5rem;
+    }
+
+    @include atLarge {
+        h1 {
+            font-size: 2rem;
+        }
+    }
+ }
+
+.page-header > span{
+    position: relative;
+    display: inline-block;
+
+
+    &:before, &:after {
+    	content: '';
+        border-bottom: 8px solid ;
+        position: absolute;
+        width: 220px;
+
+        @include atLarge {
+            position: absolute;
+            border-bottom: 2px solid;
+    	    top: 50%;
+    	    width: 52px; 
+    	    margin: 0 20px;
+        }
+    }
+
+    &:before {
+        top: 10%;
+        transform:translateX(-50%);
+
+        @include atLarge{
+            transform:translateX(0);
+            top: 50%;
+            right: 100%;
+        }
+    }
+
+    &:after {
+        bottom: 10%;
+        transform:translateX(-50%);
+
+        @include atLarge{
+            transform:translateX(0);
+            bottom: 50%;
+            left: 100%;
+        }
+    }
+}
+
+//large-news
+
+.large-news{
+  margin-top: 40px;
+  margin-bottom: 66px;
+  position: relative;
+  @include clearFix;
+
+  @include atLarge {
+  	width: 100%;
+  	margin-left: auto;
+  	margin-right: auto;
+  }
+}
+
+.large-news-content {
+	background-color: $contentBG;
+
+  p {
+    display : none;
+  }
+
+  @include atLarge {
+    padding-bottom: 50px;
+  	width: 90%;
+  	float: right;
+
+    p {
+    	display : block;
+    }
+  }
+}
+
+.main-content {
+  height: 500px;
+  padding: 34px 44px;
+
+  h2 {
+    padding-bottom: 50px;
+  }
+
+  @include atLarge {
+  	padding: 25px 45px 35px 220px;
+
+  	p {
+  		font-size: 1.7rem;
+  	}
+
+  	img {
+  		padding-left: 10px;
+  	}
+
+    h2 {
+      padding: 0;
+    }
+  }
+}
+
+.date-header {
+  display: block !important;
+  font-family: 'Lato', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  padding-bottom: 10px;
+  font-style: normal;
+  color: $content;
+  
+  &__text {
+    display: none;
+  }
+
+  @include atLarge {
+    font-weight: 400;
+  	font-size: 0.8rem;
+  	line-height: 0.8rem;
+    padding: 0;
+
+  	&__text {
+    	display: inline-block;
+  		font-weight: 700;
+  		text-transform: uppercase;
+    	color: $mainHeader;
+    }
+
+    &--small-news {
+
+      @include atLarge {
+      	padding: 10px 0 10px 0;
+
+      }
+    }
+  }
+}
+
+.readmore {
+  color: $content;
+  text-decoration: none;
+  font-size: 3rem;
+  font-style: normal;
+  
+  img {
+    display: none;
+  }
+
+  &--large {
+    color: $content;
+    padding-bottom: 20px;
+  }
+
+  @include atLarge {
+
+    font-size: 1rem;
+    color: $content;
+
+    &--large {
+      font-style: italic;
+      font-size: 1.2rem;
+      position: relative;
+      z-index: 4;
+      color: $mainGold;
+    }
+      
+    img {
+      display: inline-block;
+      padding-left: 5px;
+    }
+  }
+}
+
+.image-float-l {
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+
+  @include atLarge{
+    height: auto;
+  }
+
+  img {
+    width: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    display: block;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @include atLarge { 
+  	max-width: 330px;
+    display: block;
+    float: left;
+    z-index: 3;
+    position: absolute; 
+    top: 50%;
+    overflow: visible;
+
+    img {
+    	padding: 35px 30px;
+    	background-color: $contentBG;
+      	left: 0;
+      	top:0;
+    	max-width: 100%;
+    	max-height: 100%;
+    	transform: translate(-35%, -50%)
+    }
+  }
+}
+
+//small-news
+
+.small-news {
+	background-color: $contentBG;
+	margin-top: 35px;
+	margin-bottom: 70px;
+
+	@include atLarge {
+		height: 428px;
+
+	}
+}
+
+.small-content {
+ 	padding: 34px 44px;
+	font-style: italic;
+	color: $mainHeader;
+	font-size: 4.4rem;
+	font-family: 'Playfair Display', serif;
+	padding-bottom: 50px;
+
+	@include atLarge {
+		height: 228px;
+		padding: 5px 15px 0 15px;
+		font-size: 1.9rem;
+
+		p{
+			margin: -2px 0 5px 0;
+		}
+	}
+}
+
+.image {
+	height: 500px;
+	width: 100%;
+	overflow: hidden;
+
+	img {
+		min-height: 100%;
+		min-width: 100%;
+	  	width: 100%;
+	  	height: auto;
+	  	max-width: none;
+	  	max-height: none;
+	  	display: block;
+	  	position: relative;
+	  	top: 50%;
+	  	left: 50%;
+	  	transform: translate(-50%, -50%);
+	}
+
+	@include atLarge {
+		height: 200px;
+		img {
+			width: auto;
+			height: 100%;
+		}
+	}
+}
+
+.mobile-hide {
+	display: none;
+
+	@include atLarge {
+		display: unset;
+	}
+}
+
+//hero
+
+.hero {
+	margin: 0;
+	overflow: hidden;
+    background-size: cover;
+    background-position: center;
+	background-image: url('../img/hero.jpg');
+	color: white;
+	
+	@include atLarge {
+		height: 622px;
+	}
+}
+
+.hero-content{
+	text-align: center;
+	padding-top: 100px;
+	padding-bottom: 100px;
+
+	p {
+		font-size: 3rem;
+	}
+
+	h2 {
+		font-size: 4.5rem;
+		color: white;
+		text-shadow: 2px 2px 1px rgba(0,0,0,0.3);
+	}
+
+	span {
+		content: '';
+	    position: absolute;
+	    border-bottom: 24px solid white;
+	    width: 400px; 
+	    transform: translateX(-50%);
+	    margin: -25px 0;
+	}
+
+	@include atLarge {
+		transform: translateY(25%);
+		padding: 0;
+		
+		span {
+			width: 100px; 
+			border-bottom: 8px solid white;
+		}
+
+		p {
+			font-size: 1.3rem;
+		}
+	}
+}
+
+.hero-text {
+	padding: 30px 0;
+
+	@include atLarge {
+		padding-bottom: 60px;
+		padding-top: 15px;
+		margin: 0 auto;
+		width: 450px;
+		font-weight: 300;
+	}
+}
